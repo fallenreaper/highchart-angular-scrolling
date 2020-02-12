@@ -57,7 +57,7 @@ export class CombinedPieChartComponent implements OnInit {
   chart: Chart = null;
 
   chartOptions = {
-    chart: { type: 'bar'},
+    // chart: { type: 'bar' },
     title: {
       text: this.title || ''
     },
@@ -71,7 +71,7 @@ export class CombinedPieChartComponent implements OnInit {
       }
     },
     xAxis: {
-      type: 'category',
+      // type: 'category',
       categories: [],
       min: 0,
       max: 5
@@ -80,9 +80,9 @@ export class CombinedPieChartComponent implements OnInit {
       enabled: true
     },
     plotOptions: {
-      column: {
-        stacking: 'normal'
-      },
+      // column: {
+      //   stacking: 'normal'
+      // },
       bar: {
         dataLabels: {
           enabled: true
@@ -92,27 +92,7 @@ export class CombinedPieChartComponent implements OnInit {
         }
       }
     },
-    series: [
-      {
-        // type: "bar",
-        // name: "Column name",
-        // data: []
-      }, // .. as many as columns needed.
-      // {
-      // type: "pie",
-      // name: "My Pie",
-      // center: [100,80],
-      // size: 100,
-      // showInLegend: false,
-      // dataLabels: { enabled: false },
-      // data: [
-      //   {
-      //     name: "person 1.",
-      //     y: 16
-      // }, // Based on the number of number of columns.
-      // ]
-      // }
-    ]
+    series: []
   };
 
   private _buildTimer = null;
@@ -152,15 +132,13 @@ export class CombinedPieChartComponent implements OnInit {
         name,
         data: []
       }));
-      
-      // const orderedBars = [20, 20, 20, 20, 20].map( i => ({type: 'bar', name: `Test ${i}`, data: this.test(i)}));
 
       dataset.forEach((item: { name: string, data: { total: number, subset: number } }) => {
         orderedBars.forEach((value, idx, arr) => {
           arr[idx].data.push(item.data[value.name] || null);
         });
       });
-      const sortFunc = (a: {name: string, data: {}}, b: {name: string, data: {}}) => {
+      const sortFunc = (a: { name: string, data: {} }, b: { name: string, data: {} }) => {
         if (a.name < b.name) { return -1; }
         if (a.name > b.name) { return 1; }
         return 0;
@@ -168,7 +146,7 @@ export class CombinedPieChartComponent implements OnInit {
       opts.series = orderedBars.map(item => {
         item.name = item.name ? item.name[0].toUpperCase() + item.name.slice(1) : '';
         return item;
-      }).filter( item => item.data.length > 0).sort( sortFunc );  /// TODO:  Follow up with this.  Not sure if i should filter out empties or not.
+      }).filter(item => item.data.length > 0).sort(sortFunc);  /// TODO:  Follow up with this.  Not sure if i should filter out empties or not.
 
       opts.series.push({
         type: 'pie',
@@ -181,11 +159,9 @@ export class CombinedPieChartComponent implements OnInit {
       });
 
       if (this.chart) {
-        console.log("CHART BEING DESTROYED")
         this.chart.destroy();
-        
+
       }
-      console.log("CHART BEING CREATED")
       this.chart = new Chart(opts as any);
     }, 200);
   }

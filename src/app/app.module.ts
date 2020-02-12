@@ -21,7 +21,7 @@ import * as highmaps from 'highcharts/modules/map.src';
     ChartModule
   ],
   providers: [
-    { provide: HIGHCHARTS_MODULES, useFactory: () => [highstock, more, exporting, highmaps]}
+    { provide: HIGHCHARTS_MODULES, useFactory: () => [highstock, more, exporting, highmaps] }
   ],
   bootstrap: [AppComponent]
 })
